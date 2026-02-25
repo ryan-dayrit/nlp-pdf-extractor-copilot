@@ -5,5 +5,9 @@
   <a href="/review" style="color: #e94560;">Review</a>
 </nav>
 <main style="padding: 2rem;">
-  <slot />
+  {@render children()}
 </main>
+
+<script>
+  let { children } = $props();
+</script>

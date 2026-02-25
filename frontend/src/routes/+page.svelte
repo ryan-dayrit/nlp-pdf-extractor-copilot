@@ -1,9 +1,9 @@
 <script>
   const API_BASE = 'http://localhost:8080/api';
-  let file = null;
-  let uploading = false;
-  let result = null;
-  let error = null;
+  let file = $state(null);
+  let uploading = $state(false);
+  let result = $state(null);
+  let error = $state(null);
 
   async function upload() {
     if (!file) return;
@@ -23,8 +23,8 @@
 </script>
 
 <h1>Upload PDF Document</h1>
-<input type="file" accept=".pdf" on:change={e => file = e.target.files[0]} />
-<button on:click={upload} disabled={uploading || !file}>
+<input type="file" accept=".pdf" onchange={e => file = e.target.files[0]} />
+<button onclick={upload} disabled={uploading || !file}>
   {uploading ? 'Uploading...' : 'Upload'}
 </button>
 {#if result}

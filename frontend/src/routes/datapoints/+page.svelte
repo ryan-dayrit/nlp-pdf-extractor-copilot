@@ -1,10 +1,10 @@
 <script>
   const API_BASE = 'http://localhost:8080/api';
-  let documentId = '';
-  let dataPoints = [{ name: '', description: '' }];
-  let submitting = false;
-  let result = null;
-  let error = null;
+  let documentId = $state('');
+  let dataPoints = $state([{ name: '', description: '' }]);
+  let submitting = $state(false);
+  let result = $state(null);
+  let error = $state(null);
 
   function addDataPoint() {
     dataPoints = [...dataPoints, { name: '', description: '' }];
@@ -40,12 +40,12 @@
   <div style="display:flex; gap:0.5rem; margin:0.5rem 0;">
     <input bind:value={dp.name} placeholder="Field name (e.g. invoice_number)" />
     <input bind:value={dp.description} placeholder="Description (e.g. The invoice number)" />
-    <button on:click={() => removeDataPoint(i)}>Remove</button>
+    <button onclick={() => removeDataPoint(i)}>Remove</button>
   </div>
 {/each}
-<button on:click={addDataPoint}>+ Add Data Point</button>
+<button onclick={addDataPoint}>+ Add Data Point</button>
 <br/><br/>
-<button on:click={submit} disabled={submitting || !documentId}>
+<button onclick={submit} disabled={submitting || !documentId}>
   {submitting ? 'Submitting...' : 'Submit for Extraction'}
 </button>
 {#if result}

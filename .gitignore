@@ -1,0 +1,17 @@
+# Frontend
+frontend/node_modules/
+frontend/.svelte-kit/
+frontend/build/
+
+# Go binaries
+grpc-service/bin/
+consumer/bin/
+
+# Python
+nlp-service/__pycache__/
+nlp-service/*.pyc
+nlp-service/.venv/
+
+# Build artifacts
+*.o
+*.a
