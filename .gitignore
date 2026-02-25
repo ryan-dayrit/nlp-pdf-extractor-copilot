@@ -1,0 +1,27 @@
+# Node
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.svelte-kit/
+
+# Go build artifacts
+grpc-service/grpc-service
+consumer/consumer
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+nlp-service/__pycache__/
+*.egg-info/
+.venv/
+venv/
+
+# Docker
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
