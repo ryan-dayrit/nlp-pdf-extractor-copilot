@@ -2,12 +2,11 @@
 
 An automated, event-driven pipeline for extracting structured data points from PDF documents using NLP — built with GitHub Copilot using Claude Sonnet 4.6 .
 
-Upload a PDF and a list of fields you want extracted (e.g. `"invoice_total"`, `"vendor_name"`). The system processes the document asynchronously via Kafka and returns the extracted key-value pairs through a REST/gRPC API.
-
 # dev time 
 16m 3s 
 
----
+## Functionality 
+Upload a PDF and a list of fields you want extracted (e.g. `"invoice_total"`, `"vendor_name"`). The system processes the document asynchronously via Kafka and returns the extracted key-value pairs through a REST/gRPC API.
 
 ## Architecture
 
