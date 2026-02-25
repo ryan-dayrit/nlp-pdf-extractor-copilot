@@ -1,0 +1,44 @@
+syntax = "proto3";
+package extractor;
+option go_package = "./pb";
+
+service ExtractorService {
+  rpc UploadDocument(UploadDocumentRequest) returns (UploadDocumentResponse);
+  rpc GetDataPoints(GetDataPointsRequest) returns (GetDataPointsResponse);
+  rpc ListDocuments(ListDocumentsRequest) returns (ListDocumentsResponse);
+  rpc UpdateDataPoints(UpdateDataPointsRequest) returns (UpdateDataPointsResponse);
+}
+
+message UploadDocumentRequest {
+  string filename = 1;
+  bytes  pdf_data  = 2;
+  repeated string data_points = 3;
+}
+message UploadDocumentResponse {
+  string document_id = 1;
+  string status      = 2;
+}
+message GetDataPointsRequest {
+  string document_id = 1;
+}
+message GetDataPointsResponse {
+  string document_id = 1;
+  string status      = 2;
+  map<string, string> results = 3;
+}
+message ListDocumentsRequest {}
+message ListDocumentsResponse {
+  repeated DocumentSummary documents = 1;
+}
+message DocumentSummary {
+  string document_id = 1;
+  string filename    = 2;
+  string status      = 3;
+}
+message UpdateDataPointsRequest {
+  string document_id = 1;
+  map<string, string> results = 2;
+}
+message UpdateDataPointsResponse {
+  string status = 1;
+}
