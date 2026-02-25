@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package extractor;
+option go_package = "github.com/ryan-dayrit/pdf-extractor-pipeline/grpc-service/proto";
+
+service PDFExtractorService {
+  rpc UploadDocument(UploadDocumentRequest) returns (UploadDocumentResponse);
+  rpc SubmitDataPoints(SubmitDataPointsRequest) returns (SubmitDataPointsResponse);
+  rpc GetExtractionResults(GetResultsRequest) returns (GetResultsResponse);
+  rpc ListDocuments(ListDocumentsRequest) returns (ListDocumentsResponse);
+}
+
+message UploadDocumentRequest {
+  bytes content = 1;
+  string filename = 2;
+}
+message UploadDocumentResponse {
+  string document_id = 1;
+  string status = 2;
+}
+message DataPoint {
+  string name = 1;
+  string description = 2;
+}
+message SubmitDataPointsRequest {
+  string document_id = 1;
+  repeated DataPoint data_points = 2;
+}
+message SubmitDataPointsResponse {
+  string status = 1;
+}
+message ExtractionResult {
+  string name = 1;
+  string value = 2;
+  double confidence = 3;
+}
+message GetResultsRequest {
+  string document_id = 1;
+}
+message GetResultsResponse {
+  string document_id = 1;
+  string status = 2;
+  repeated ExtractionResult results = 3;
+}
+message ListDocumentsRequest {}
+message Document {
+  string id = 1;
+  string filename = 2;
+  string status = 3;
+  string created_at = 4;
+}
+message ListDocumentsResponse {
+  repeated Document documents = 1;
+}

@@ -1,0 +1,48 @@
+version: '3.9'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    depends_on: [zookeeper]
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+
+  nlp-service:
+    build: ./nlp-service
+    ports:
+      - "8000:8000"
+
+  grpc-service:
+    build: ./grpc-service
+    ports:
+      - "50051:50051"
+      - "8080:8080"
+    depends_on: [kafka]
+    environment:
+      KAFKA_BROKER: kafka:29092
+
+  consumer:
+    build: ./consumer
+    depends_on: [kafka, grpc-service, nlp-service]
+    environment:
+      KAFKA_BROKER: kafka:29092
+      GRPC_SERVICE_URL: http://grpc-service:8080
+      NLP_SERVICE_URL: http://nlp-service:8000
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on: [grpc-service]
