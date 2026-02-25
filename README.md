@@ -53,6 +53,14 @@ Upload a PDF and a list of fields you want extracted (e.g. `"invoice_total"`, `"
 
 - [Docker](https://docs.docker.com/get-docker/) ≥ 24
 - [Docker Compose](https://docs.docker.com/compose/install/) ≥ 2 (bundled with Docker Desktop)
+- Python `3.13.x` recommended for local `nlp-service` development
+
+```bash
+pyenv install 3.13.2 && pyenv local 3.13.2
+python --version
+```
+
+If you don’t use `pyenv`, you can install Python 3.13 with Homebrew (`brew install python@3.13`) and use that interpreter for `nlp-service`.
 
 ---
 
@@ -195,6 +203,8 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 ```
+
+> **Note:** spaCy NER is automatically disabled on Python 3.14+ (regex-based extraction still works). It is fully enabled on Python 3.13 or below.
 
 ### grpc-service (Go)
 

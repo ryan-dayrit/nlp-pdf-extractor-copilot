@@ -1,11 +1,22 @@
 import re
+import sys
 import fitz  # PyMuPDF
-import spacy
+
+if sys.version_info < (3, 14):
+    try:
+        import spacy
+    except Exception:
+        spacy = None
+else:
+    spacy = None
 
 # Load spaCy model once at import time; fall back gracefully if unavailable.
-try:
-    _nlp = spacy.load("en_core_web_sm")
-except OSError:
+if spacy is not None:
+    try:
+        _nlp = spacy.load("en_core_web_sm")
+    except Exception:
+        _nlp = None
+else:
     _nlp = None
 
 # ---------------------------------------------------------------------------
